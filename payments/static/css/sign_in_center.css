@@ -1,0 +1,39 @@
+.max-auto{
+    margin-top: 12em;
+    margin-bottom: 5em;
+}
+
+.error_p{
+    font-color:(255,10,10);
+}
+
+.pad{
+    padding: 10% 10% 10% 10%;
+}
+
+.pad1{
+    margin-bottom: -2%;
+    margin-left: -2%;
+    margin-top: 5%;
+    margin-right: 10%
+}
+
+.customarg{
+    margin-top: 5%;
+}
+
+.holding{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.position{
+    position: absolute;
+    left: 99%;
+    top: -1rem;
+}
+
+.block-marg{
+    margin-bottom: 1rem;
+}

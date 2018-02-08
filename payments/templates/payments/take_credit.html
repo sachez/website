@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Take Credit{% endblock %}
+
+{% block css %}<link rel='stylesheet' href="{% static 'css/sign_in_center.css'%}">{% endblock %}
+
+{% block content %}
+
+    <div class='container-fluid'>
+        <div class='row'>
+            <div class='mx-auto max-auto'>
+                <div class='border rounded pad'>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for field in take_credit_form %}
+                            {{field.label}}{{field}}
+                            {{field.get_deposit_display}}
+                            
+                        {% endfor %}
+                        <button class='btn' type="submit"> Make Request </button>
+                        <a class='btn btn-primary' href="{% url 'user_home' id=id %}">Home</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src={% static 'js/recalculating_field.js' %}></script>
+{% endblock %}

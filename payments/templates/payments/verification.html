@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Verification{% endblock %}
+
+{% block css %}<link rel='stylesheet' href="{% static 'css/sign_in_center.css' %}">{% endblock %}
+
+{% block content %}
+
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='mx-auto max-auto'>
+            <form method="POST" enctype="multipart/form-data" id="contact_form">
+                {% csrf_token %}
+                {% for field in verification_form %}
+                    {{field.label}}
+                    {{field}}
+                    {% if field.gelp_text %}
+                        <p><strong>{{field.help_text}}</strong><p>
+                    {% endif %}
+                {% endfor %}
+                <button class='btn' type="submit"> Send </button>
+                <a class='btn btn-primary' href="{% url 'user_home' id=id %}" role="button">Skip</a>
+            </form>
+        </div>        
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block javascript %}
+{% endblock %}

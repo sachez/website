@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Home page{% endblock %}
+
+{% block css %} <link rel='stylesheet' href="{% static 'css/sign_in_center.css' %}"> {% endblock %}
+
+{% block content %}
+    <nav class='navbar navbar-expand-lg navbar-dark'>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class='collapse navbar-collapse' id="navbarNav">
+            <ul class='navbar-nav mr-auto'>
+            {% if perms.auth.take_credit %}
+                <li class='nav-item'><a class='nav-link btn btn-link' href="{%url 'take_credit' %}" type='button'> Take payment </a></l>
+            {% else %}
+                <li class='nav-item'><a class='nav-link btn btn-link' type='button'> Take payment </a></li>
+            {% endif %}
+                <li class='nav-item'><a class='nav-link btn btn-link' href="{% url 'verification' %}" type='button'>Verification</a><div>
+                <li class='nav-item'><a class='nav-link btn btn-link' href="{% url 'logout' %}" type='button'>{{request.user}} LogOut </a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class='container customarg'>
+        {% if lains|length > 0 %}
+            <div class='row'>
+                {% for lain in lains %}
+                    <div class='col-4 block-marg'>
+                        <div class='border rounded pad bgc'>
+                            <div class='holding'>
+                                <div class='position'>
+                                    {% ifequal lain.approve True %}
+                                        <i class='fa fa-check-circle-o'></i>
+                                    {% endifequal %}
+                                    {% ifequal lain.approve False %}
+                                        <i class='fa fa-close'></i>
+                                    {% endifequal %}
+                                    {% ifequal lain.approve None %}
+                                        <i class='fa fa-question'></i>
+                                    {% endifequal %}
+                                </div>
+                            </div>
+                            <div class='border rounded pad1 pad bgc'>
+                                <p>Summary depos - {{lain.summary_depos}}</p>
+                                <p>Available depos - {{lain.deposit}}</p>
+                                <p>Lain - {{lain.lain}}</p>
+                                <p>Times - {{lain.max_lain}}{{lain.format_lain}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class='row'>
+                <div class='mx-auto max-auto'>
+                    <div class='border rounded pad'>
+                        <p class='center'> No Payments </p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,8 @@
+body{
+    background: #7B2324;
+}
+
+.vertical {
+    display: flex;
+    align-items: center;
+}

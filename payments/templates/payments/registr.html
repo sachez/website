@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %} Register {% endblock%}
+
+{% block css %}<link rel='stylesheet' href="{% static 'css/sign_in_center.css'%}">{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        <div class='row'>
+            <div class='mx-auto max-auto'>
+                <div class='border rounded pad'>
+                    <p id='id_error' class='error_p'></p>
+                    <form method="POST" id='form'>
+                        {% csrf_token %}
+                        {% for field in reg_form %}
+                            <div class='form-group'>
+                                {{ field.errors }}
+                                {{ field.label_tag }} 
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <p class="help">{{ field.help_text|safe }}</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <button type='submit' id='check_form' class='btn'>Registration</button> 
+                        <a href="{% url 'sign_in' %}" class='btn btn-primary'> Authorization </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block javascript %}
+    <script src='{% static 'js/check_form.js' %}'> </script>
+{% endblock %}
+
