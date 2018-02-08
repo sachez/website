@@ -142,7 +142,7 @@ CELERY_TIMEZONE = 'Europe/Moscow'
 CELERY_BEAT_SCHEDULE = {
     'get_curse': {
         'task': 'payments.tasks.get_curse',
-        'schedule': 8000.0
+        'schedule': 1200.0
     }
 }
 

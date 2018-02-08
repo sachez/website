@@ -3,13 +3,12 @@ from django.contrib.auth.models import Permission
 from payments.forms import Register, SignInForm, TakeCreditForm, VerificationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from payments.models import Credit, VerificationInformation, ExtUser
+from payments.models import Credit, ExtUser
 from django.http import JsonResponse
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_protect
-from payments.tasks import get_curse as gc
 import re
 import json
 
@@ -21,24 +20,13 @@ redis = getattr(settings, 'CACHE_REDIS', None)
 
 @login_required(login_url='/payments/sign_in')
 def get_curse(request):
-    i = 1
-    curse = {}
-    while True:
-        try:
-            curse = json.loads(redis.get(redis.keys('*')[-i]).decode())
-            if curse['status'] == 'SUCCESS':
-                return JsonResponse({
-                    'success': True,
-                    'error': None,
-                    'curse': curse['result']
-                })
-            i += 1
-        except IndexError:
-            return JsonResponse({
-                'success': False,
-                'error': 'Service Unavailable',
-                'curse': None
-            })
+    curse = json.loads(redis.get(redis.keys('*')[0]).decode())
+    if curse:
+        return JsonResponse({
+            'success': True,
+            'error': None,
+            'curse': curse['result']
+        })
 
 
 @login_required(login_url='/payments/sign_in')
